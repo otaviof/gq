@@ -10,7 +10,9 @@ import (
 )
 
 const (
+	// JSON format
 	JSON = "json"
+	// YAML format
 	YAML = "yaml"
 )
 
