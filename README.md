@@ -1,3 +1,15 @@
+<p align="center">
+    <a alt="GoReport" href="https://goreportcard.com/report/github.com/otaviof/gq">
+        <img src="https://goreportcard.com/badge/github.com/otaviof/gq">
+    </a>
+    <a alt="CI Status" href="https://travis-ci.com/otaviof/gq">
+        <img src="https://travis-ci.com/otaviof/gq.svg?branch=master">
+    </a>
+    <a alt="Quay.io Container Image" href="https://quay.io/repository/otaviof/gq">
+        <img src="https://quay.io/repository/otaviof/gq/status">
+    </a>
+</p>
+
 # `gq`
 
 Is a swissarmy knife text processor to apply [Go Templates][gotmpl] against structure file formats,
