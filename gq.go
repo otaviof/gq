@@ -5,7 +5,7 @@ import (
 	"text/template"
 )
 
-// NewGQ holds the template and payload.
+// GQ holds the template and payload.
 type GQ struct {
 	t       *template.Template     // go template
 	payload map[string]interface{} // payload instance
