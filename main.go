@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"strings"
 
 	"github.com/spf13/viper"
 
@@ -11,30 +12,29 @@ import (
 
 // rootCmd defines the gq command elements.
 var rootCmd = &cobra.Command{
-	Use:   "gq [template] [files]",
+	Use:   "gq <template> [file]...",
 	Args:  validateArgs,
 	Run:   run,
 	Short: "gq: Command-line Go Templates processor for YAML/JSON",
 	Long: `### gq
 
-Go templates based swissarmy knife for structure text formats. It can process multiple files
-directly, or standard input.
+Go templates based swissarmy knife for structured text formats, like YAML/JSON. It can process
+multiple files directly, or via standard input.
 
-Example:
+Examples:
 	$ gq '{{ index . "current-context" }}' ~/.kube/config
 	$ cat ~/.kube/config |gq '{{ index . "current-context" }}'
 	$ gq --type=json '{{ range .HttpHeaders }}{{ printf "%s\n" . }}{{ end }}' ~/.docker/config.json
+	$ gq --type=toml '{{ range $c := .constraint }}{{ printf "%s\n" $c.name }}{{ end }}' Gopkg.toml
 	`,
 }
-
-// supportedConentTypes list of support content-types.
-var supportedConentTypes = []string{YAML, JSON}
 
 // init declare command-line arguments.
 func init() {
 	flags := rootCmd.PersistentFlags()
 
-	flags.String("type", YAML, fmt.Sprintf("File type, accepted '%v'", supportedConentTypes))
+	flags.String("type", YAML, fmt.Sprintf(
+		"File type, accepted formats: \"%v\"", strings.Join(SupportedContentTypes, ", ")))
 
 	if err := viper.BindPFlags(flags); err != nil {
 		panic(err)

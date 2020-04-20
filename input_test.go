@@ -10,6 +10,8 @@ import (
 
 func unmarshal(t *testing.T, input *Input) {
 	payload, err := input.Unmarshal()
+	t.Logf("payload='%#v'", payload)
+
 	assert.NoError(t, err)
 	assert.NotNil(t, payload)
 }
@@ -29,6 +31,16 @@ func TestInputJSON(t *testing.T) {
 	require.NotNil(t, input)
 
 	err := input.SlurpPath("test/data/file.json")
+	require.NoError(t, err)
+
+	unmarshal(t, input)
+}
+
+func TestInputTOML(t *testing.T) {
+	input := NewInput(TOML)
+	require.NotNil(t, input)
+
+	err := input.SlurpPath("test/data/file.toml")
 	require.NoError(t, err)
 
 	unmarshal(t, input)

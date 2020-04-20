@@ -1,10 +1,11 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"os"
+
+	"github.com/pelletier/go-toml"
 
 	"gopkg.in/yaml.v2"
 )
@@ -14,7 +15,12 @@ const (
 	JSON = "json"
 	// YAML format
 	YAML = "yaml"
+	// TOML format
+	TOML = "toml"
 )
+
+// SupportedContentTypes list of support content-types.
+var SupportedContentTypes = []string{YAML, JSON, TOML}
 
 // Input for gq processing, comprises the bytes and content-type together.
 type Input struct {
@@ -47,10 +53,12 @@ func (i *Input) Unmarshal() (map[string]interface{}, error) {
 	var payload = map[string]interface{}{}
 	var err error
 	switch i.contentType {
-	case "yaml":
+	case YAML:
 		err = yaml.Unmarshal(i.b, payload)
-	case "json":
-		err = json.Unmarshal(i.b, &payload)
+	case JSON:
+		err = yaml.Unmarshal(i.b, payload)
+	case TOML:
+		err = toml.Unmarshal(i.b, &payload)
 	default:
 		return nil, fmt.Errorf("content-type '%s' is not supported", i.contentType)
 	}

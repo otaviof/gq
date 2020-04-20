@@ -5,6 +5,7 @@ GQ="./gq"
 TMPL='{{ .status.host }}'
 EXAMPLE_YAML="test/data/file.yaml"
 EXAMPLE_JSON="test/data/file.json"
+EXAMPLE_TOML="test/data/file.toml"
 
 @test "gq: using defults" {
     res=$(${GQ} "${TMPL}" ${EXAMPLE_YAML})
@@ -13,6 +14,11 @@ EXAMPLE_JSON="test/data/file.json"
 
 @test "gq: json file" {
     res=$(${GQ} --type=json "${TMPL}" ${EXAMPLE_JSON})
+    [ "${res}" == "expected" ]
+}
+
+@test "gq: toml file" {
+    res=$(${GQ} --type=toml "${TMPL}" ${EXAMPLE_TOML})
     [ "${res}" == "expected" ]
 }
 
