@@ -3,6 +3,7 @@ IMAGE_TAG ?= "quay.io/otaviof/$(APP):latest"
 
 GO_FLAGS ?= -v -mod=vendor
 GO_TEST_FLAGS ?= -failfast
+GO_TEST_ARGS ?=
 
 RUN_ARGS ?=
 
@@ -32,7 +33,7 @@ test: test-unit test-integration
 
 .PHONY: test-unit
 test-unit:
-	go test $(GO_FLAGS) $(GO_TEST_FLAGS) .
+	go test $(GO_FLAGS) $(GO_TEST_FLAGS) $(GO_TEST_ARGS) .
 
 .PHONY: test-integration
 test-integration: build
